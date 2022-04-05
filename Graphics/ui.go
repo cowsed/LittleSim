@@ -1,6 +1,7 @@
-package main
+package simgraphics
 
 import (
+	simdata "LittleSim/WorldData"
 	"fmt"
 
 	"github.com/inkyblackness/imgui-go/v4"
@@ -26,13 +27,13 @@ func DrawTileExplorer() {
 			imgui.Text("No Tile Selected")
 		} else {
 			imgui.Text(fmt.Sprintf("Chunk: %dx%d -  Tile %dx%d Selected", SelectedChunkX, SelectedChunkY, SelectedX, SelectedY))
-			imgui.Text(fmt.Sprint(ReverseTileNames[int(currentTileID)]))
+			imgui.Text(fmt.Sprint(simdata.ReverseTileNames[int(currentTileID)]))
 		}
 		imgui.InputIntV("Tile Index", &currentTileID, 1, 1, 0)
 		TileViewWindow(int(currentTileID), 128)
 
 		if imgui.BeginTableV("IDs", 2, imgui.TableFlagsBorders, imgui.ContentRegionAvail(), 200) {
-			for _, v := range JustNames {
+			for _, v := range simdata.JustNames {
 				clicked := false
 
 				imgui.TableNextColumn()
@@ -41,10 +42,10 @@ func DrawTileExplorer() {
 
 				imgui.TableNextColumn()
 
-				clicked = imgui.Selectable(fmt.Sprint(TileNames[v])) || clicked
+				clicked = imgui.Selectable(fmt.Sprint(simdata.TileNames[v])) || clicked
 				imgui.TableNextRow()
 				if clicked {
-					currentTileID = int32(TileNames[v])
+					currentTileID = int32(simdata.TileNames[v])
 				}
 
 			}
@@ -62,7 +63,7 @@ func DrawTilePallette() {
 		TileViewWindow(int(currentDrawTileID), 128)
 
 		if imgui.BeginTableV("IDs", 2, imgui.TableFlagsBorders, imgui.ContentRegionAvail(), 200) {
-			for _, v := range WorldlyTiles {
+			for _, v := range simdata.WorldlyTiles {
 				clicked := false
 				imgui.TableNextColumn()
 
@@ -70,11 +71,11 @@ func DrawTilePallette() {
 
 				imgui.TableNextColumn()
 
-				clicked = imgui.Selectable(fmt.Sprint(TileNames[v])) || clicked
+				clicked = imgui.Selectable(fmt.Sprint(simdata.TileNames[v])) || clicked
 				imgui.TableNextRow()
 				if clicked {
 					fmt.Println("selected")
-					currentDrawTileID = int32(MapToDefualt[v])
+					currentDrawTileID = int32(simdata.MapToDefualt[v])
 				}
 			}
 			imgui.EndTable()

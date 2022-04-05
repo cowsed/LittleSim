@@ -1,4 +1,4 @@
-package main
+package simdata
 
 import "sort"
 
@@ -162,6 +162,9 @@ var TileNames = map[string]int{
 
 //Maps the aesthetic tiles back to their worldly counterparts - border to center
 var MapToDefualt = map[string]int{
+	"green_ground":  TileNames["green_ground"],
+	"green_ground2": TileNames["green_ground"],
+
 	"dirt_path":    TileNames["dirt_path"],
 	"dirt_path_cl": TileNames["dirt_path"],
 	"dirt_path_cr": TileNames["dirt_path"],
@@ -249,7 +252,7 @@ var MapToDefualt = map[string]int{
 var ReverseTileNames = map[int]string{}
 var JustNames = []string{}
 var WorldlyTiles = []string{
-	"water", "held_water", "dirt_path", "gray_path", "white_path", "red_flower", "white_flower",
+	"water", "held_water", "green_ground", "dirt_path", "gray_path", "white_path", "red_flower", "white_flower",
 }
 
 func init() {

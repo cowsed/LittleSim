@@ -1,6 +1,10 @@
-package main
+package simgraphics
 
-import "fmt"
+import (
+	simworld "LittleSim/World"
+	simdata "LittleSim/WorldData"
+	"fmt"
+)
 
 //Figure out which part to use if a tile is at a border
 type TileSurrounding [3][3]bool
@@ -304,36 +308,7 @@ var AutotileGuide = map[TileSurrounding]string{
 	B3: "b",
 }
 
-func GetTileSafe(x, y int, ID ChunkCoord, world *World) int {
-	if (x > 16 || x < (-16)) || (y > 16 || y < (-16)) {
-		panic("Out of bounds really hard")
-	}
-	if x < 0 {
-		x = 16 - x
-		ID[0] -= 1
-	}
-	if x > 15 {
-		x = x - 16
-		ID[0] += 1
-	}
-	if y < 0 {
-		y = 16 - y
-		ID[1] -= 1
-	}
-	if y > 15 {
-		y = y - 16
-		ID[1] += 1
-	}
-
-	//Check if chunk exists
-	if !world.ChunkExists(ID) {
-		return DEFUALT_TILE
-	}
-
-	return world.GetChunk(ID).GetTile(x, y).Material
-}
-
-func Autotile(cx, cy int, ID ChunkCoord, world *World, debug bool) int {
+func Autotile(cx, cy int, ID simdata.ChunkCoord, world *simworld.World, debug bool) int {
 	tracker := [3][3]bool{
 		{false, false, false},
 		{false, false, false},
@@ -359,15 +334,15 @@ func Autotile(cx, cy int, ID ChunkCoord, world *World, debug bool) int {
 	}
 	if t == "c" || t == "" {
 		if debug {
-			fmt.Println(ReverseTileNames[me])
+			fmt.Println(simdata.ReverseTileNames[me])
 		}
 		return me
 	}
 
 	if debug {
-		fmt.Println(ReverseTileNames[me] + "_" + t)
+		fmt.Println(simdata.ReverseTileNames[me] + "_" + t)
 	}
-	if tileNum, found := TileNames[ReverseTileNames[me]+"_"+t]; found {
+	if tileNum, found := simdata.TileNames[simdata.ReverseTileNames[me]+"_"+t]; found {
 		return tileNum
 	}
 	return me
