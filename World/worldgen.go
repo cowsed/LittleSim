@@ -5,34 +5,36 @@ import (
 	simdata "LittleSim/WorldData"
 	"math"
 	"math/rand"
-)
 
-type World struct {
-	WorldMap map[simdata.ChunkCoord]*simdata.Chunk
-}
+	"github.com/google/uuid"
+)
 
 func (w *World) ChunkExists(ID simdata.ChunkCoord) bool {
 	_, ok := w.WorldMap[ID]
 	return ok
 }
 func (w *World) GetChunk(ID simdata.ChunkCoord) *simdata.Chunk {
-	return w.WorldMap[ID]
+	return w.WorldMap[ID].Chunk
 }
-func (w *World) SetTile(x, y int, ID simdata.ChunkCoord, TileID int) {
+func (w *World) SetTile(x, y int, ID simdata.ChunkCoord, TileID simdata.TilemapKey) {
 	if !w.ChunkExists(ID) {
 		return
 	}
-	w.WorldMap[ID].SetTile(x, y, simdata.EnvBlock{Material: TileID})
+	w.WorldMap[ID].Chunk.SetTile(x, y, simdata.EnvBlock{Material: TileID})
 	communications.InvalidateChunk(x, y, ID)
 }
 
 func GenWorld(n int) *World {
 	w := World{
-		WorldMap: map[simdata.ChunkCoord]*simdata.Chunk{},
+		WorldMap: map[simdata.ChunkCoord]*ChunkData{},
 	}
 	for y := 0; y < n; y++ {
 		for x := 0; x < n; x++ {
-			w.WorldMap[simdata.ChunkCoord{x, y}] = GenChunk(x*16, y*16)
+			cinfo := ChunkData{
+				Chunk:         GenChunk(x*16, y*16),
+				LocalEntities: map[uuid.UUID]simdata.Entity{},
+			}
+			w.WorldMap[simdata.ChunkCoord{x, y}] = &cinfo
 		}
 	}
 
@@ -49,7 +51,7 @@ func GenChunk(xStart, yStart int) *simdata.Chunk {
 	}
 
 	//Make Base Layer
-	avail := []int{simdata.TileNames["green_ground"]}
+	avail := []simdata.TilemapKey{simdata.TileNames["green_ground"]}
 	for y := 0; y < 16; y++ {
 		for x := 0; x < 16; x++ {
 			//Seed = xStart+yStart

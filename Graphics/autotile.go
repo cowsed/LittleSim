@@ -181,7 +181,25 @@ var X6 = TileSurrounding{
 	[3]bool{false, false, false},
 }
 var X7 = MirrorY(X6)
-
+var X8 = TileSurrounding{
+	[3]bool{true, false, false},
+	[3]bool{true, true, true},
+	[3]bool{true, false, false},
+}
+var X9 = MirrorX(X8)
+var X10 = TileSurrounding{
+	[3]bool{true, false, true},
+	[3]bool{true, true, true},
+	[3]bool{false, false, true},
+}
+var X11 = MirrorX(X10)
+var X12 = MirrorY(X10)
+var X13 = MirrorY(X11)
+var X14 = TileSurrounding{
+	[3]bool{true, false, true},
+	[3]bool{true, true, true},
+	[3]bool{true, false, true},
+}
 var Y = RotateCW(X)
 var Y2 = RotateCW(X2)
 var Y3 = RotateCW(X3)
@@ -189,6 +207,13 @@ var Y4 = MirrorY(Y2)
 var Y5 = MirrorY(Y3)
 var Y6 = RotateCW(X6)
 var Y7 = RotateCW(X7)
+var Y8 = RotateCW(X8)
+var Y9 = MirrorY(Y8)
+var Y10 = RotateCW(X10)
+var Y11 = RotateCW(X11)
+var Y12 = MirrorX(Y10)
+var Y13 = MirrorX(Y11)
+var Y14 = RotateCW(X2)
 
 var BR_TURN = TileSurrounding{
 	[3]bool{false, false, false},
@@ -217,22 +242,37 @@ var JUNC_rbl = RotateCW(JUNC_trb)
 var JUNC_blu = RotateCW(JUNC_rbl)
 
 var AutotileGuide = map[TileSurrounding]string{
-	C:  "c",
-	X:  "x",
-	X2: "x",
-	X3: "x",
-	X4: "x",
-	X5: "x",
-	X6: "x",
-	X7: "x",
+	C: "c",
 
-	Y:  "y",
-	Y2: "y",
-	Y3: "y",
-	Y4: "y",
-	Y5: "y",
-	Y6: "y",
-	Y7: "y",
+	X:   "x",
+	X2:  "x",
+	X3:  "x",
+	X4:  "x",
+	X5:  "x",
+	X6:  "x",
+	X7:  "x",
+	X8:  "x",
+	X9:  "x",
+	X10: "x",
+	X11: "x",
+	X12: "x",
+	X13: "x",
+	X14: "x",
+
+	Y:   "y",
+	Y2:  "y",
+	Y3:  "y",
+	Y4:  "y",
+	Y5:  "y",
+	Y6:  "y",
+	Y7:  "y",
+	Y8:  "y",
+	Y9:  "y",
+	Y10: "y",
+	Y11: "y",
+	Y12: "y",
+	Y13: "y",
+	Y14: "y",
 
 	JUNC_4WAY: "4way",
 
@@ -308,7 +348,7 @@ var AutotileGuide = map[TileSurrounding]string{
 	B3: "b",
 }
 
-func Autotile(cx, cy int, ID simdata.ChunkCoord, world *simworld.World, debug bool) int {
+func Autotile(cx, cy int, ID simdata.ChunkCoord, world *simworld.World, debug bool) simdata.TilemapKey {
 	tracker := [3][3]bool{
 		{false, false, false},
 		{false, false, false},
