@@ -12,6 +12,12 @@ type TilemapKey struct {
 	Tile  int
 }
 
+type Sprite struct {
+	//In tiles, the dimensions of the sprite
+	Width, Height int
+	Sprites       [][]TilemapKey
+}
+
 var DEFUALT_TILE TilemapKey = TilemapKey{0, 1329}
 
 var TileNames = map[string]TilemapKey{
@@ -235,6 +241,17 @@ var TileNames = map[string]TilemapKey{
 
 	"medium_wood_fireplace_1": {0, 502},
 	"medium_wood_fireplace_2": {0, 503},
+
+	"large_fireplace_top_1": {0, 558},
+	"large_fireplace_top_2": {0, 559},
+
+	"large_fireplace_bot_1": {0, 558 + 56},
+	"large_fireplace_bot_2": {0, 559 + 56},
+
+	"green_tent_bl": {0, 662},
+	"green_tent_br": {0, 663},
+	"green_tent_tl": {0, 606},
+	"green_tent_tr": {0, 607},
 }
 
 //Maps the aesthetic tiles back to their worldly counterparts - border to center

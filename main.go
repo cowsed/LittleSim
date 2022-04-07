@@ -26,13 +26,16 @@ func main() {
 	u := uuid.New()
 	u2 := uuid.New()
 
+	frame1 := simdata.MakeSpritefromTiles([][]simdata.TilemapKey{{simdata.TileNames["large_fireplace_top_1"]}, {simdata.TileNames["large_fireplace_bot_1"]}})
+	frame2 := simdata.MakeSpritefromTiles([][]simdata.TilemapKey{{simdata.TileNames["large_fireplace_top_2"]}, {simdata.TileNames["large_fireplace_bot_2"]}})
+
 	fire := &simworld.Flame{
 		ID:           u,
 		Pos:          simdata.Location{X: 0, Y: 0, CC: simdata.ChunkCoord{0, 0}},
 		Heat:         1,
 		Light:        1,
 		Extinguished: false,
-		Frames:       simdata.MakeFrameList([]simdata.TilemapKey{simdata.TileNames["campfire_1"], simdata.TileNames["campfire_2"]}, []int{16, 16}),
+		Frames:       simdata.MakeFrameList([]simdata.Sprite{frame1, frame2}, []int{16, 16}),
 	}
 	fire2 := &simworld.Flame{
 		ID:           u2,
@@ -40,7 +43,7 @@ func main() {
 		Heat:         1,
 		Light:        1,
 		Extinguished: false,
-		Frames:       simdata.MakeFrameList([]simdata.TilemapKey{simdata.TileNames["small_fireplace_1"], simdata.TileNames["small_fireplace_2"]}, []int{16, 16}),
+		Frames:       simdata.MakeFrameList([]simdata.Sprite{simdata.MakeSpriteFromOneTile(simdata.TileNames["small_fireplace_1"]), simdata.MakeSpriteFromOneTile(simdata.TileNames["small_fireplace_2"])}, []int{16, 16}),
 	}
 
 	gg.gameWorld.WorldMap[fire.Pos.CC].LocalEntities[u] = fire

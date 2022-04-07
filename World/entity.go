@@ -23,7 +23,7 @@ type Flame struct {
 	Heat         float64
 	Light        float64
 	Extinguished bool
-	Frames       []simdata.TilemapKey
+	Frames       []simdata.Sprite
 }
 
 func (f *Flame) String() string {
@@ -32,7 +32,7 @@ func (f *Flame) String() string {
 func (f *Flame) UUID() uuid.UUID {
 	return f.ID
 }
-func (f *Flame) AnimationFrames() []simdata.TilemapKey {
+func (f *Flame) AnimationFrames() []simdata.Sprite {
 	return f.Frames
 }
 func (f *Flame) SubEntities() []simdata.Entity {

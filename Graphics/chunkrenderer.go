@@ -68,8 +68,15 @@ func (c *ChunkRenderer) DrawEntities(animationTick int, cam *Camera) {
 		//x, y, z := cam.WorldPosToScreenPos(v.Position())
 		//fmt.Println("Drawing", k, "at", x, y, z)
 		animFram := animationTick % len(v.AnimationFrames())
-		BlitTile(c.entityImage, TileMap, int(v.Position().X), int(v.Position().Y), v.AnimationFrames()[animFram])
+		c.RenderSprite(c.entityImage, TileMap, int(v.Position().X), int(v.Position().Y), v.AnimationFrames()[animFram])
 
+	}
+}
+func (c *ChunkRenderer) RenderSprite(dest, tilemap *ebiten.Image, sx, sy int, s simdata.Sprite) {
+	for y := 0; y < s.Height; y++ {
+		for x := 0; x < s.Width; x++ {
+			BlitTile(dest, tilemap, sx+x, sy+y, s.Sprites[y][x])
+		}
 	}
 }
 
